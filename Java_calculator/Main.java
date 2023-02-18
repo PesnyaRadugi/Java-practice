@@ -1,6 +1,5 @@
 package Java_calculator;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -63,40 +62,31 @@ public class Main {
 
     private static int romansToArabic(String roman) throws Exception
     {
-        try
-        {
-            if (roman.equals("I")) {
-                return 1;
-            } else if (roman.equals("II")) {
-                return 2;
-            } else if (roman.equals("III")) {
-                return 3;
-            } else if (roman.equals("IV")) {
-                return 4;
-            } else if (roman.equals("V")) {
-                return 5;
-            } else if (roman.equals("VI")) {
-                return 6;
-            } else if (roman.equals("VII")) {
-                return 7;
-            } else if (roman.equals("VIII")) {
-                return 8;
-            } else if (roman.equals("IX")) {
-                return 9;
-            } else if (roman.equals("X")) {
-                return 10;
-            }
-            else
-            {
-                throw new Exception("Incorrect data format");
-                break;
-            }
+        if (roman.equals("I")) {
+            return 1;
+        } else if (roman.equals("II")) {
+            return 2;
+        } else if (roman.equals("III")) {
+            return 3;
+        } else if (roman.equals("IV")) {
+            return 4;
+        } else if (roman.equals("V")) {
+            return 5;
+        } else if (roman.equals("VI")) {
+            return 6;
+        } else if (roman.equals("VII")) {
+            return 7;
+        } else if (roman.equals("VIII")) {
+            return 8;
+        } else if (roman.equals("IX")) {
+            return 9;
+        } else if (roman.equals("X")) {
+            return 10;
         }
-        catch (Exception e)
+        else
         {
-            e.printStackTrace();
+            throw new Exception("Incorrect data format");
         }
-        return -1;
     }
 
     public static String calc(String input) throws Exception
@@ -138,41 +128,47 @@ public class Main {
         }
         else if (!isNumeric(expression[0]) && !isNumeric(expression[2]))
         {
-            val1 = romansToArabic(expression[0]);
-            val2 = romansToArabic(expression[2]);
-            switch(operator)
-            {
-                case "+":
-                    result = arabicToRoman(val1 + val2);
-                    break;
-                case "-":
-                    result = arabicToRoman(val1 - val2);
-                    break;
-                case "*":
-                    result = arabicToRoman(val1 * val2);
-                    break;
-                case "/":
-                    try 
-                    {
-                        result = arabicToRoman(val1 / val2);    
-                    } catch (Exception e)
-                    {
-                        throw new Exception("Can't divide by 0");
-                    }
-                    break;
-            }
-        }
-        else
-        {
             try
             {
-                throw new Exception("Both values must be of same type");
+                val1 = romansToArabic(expression[0]);
+                val2 = romansToArabic(expression[2]);
+                switch(operator)
+                {
+                    case "+":
+                        result = arabicToRoman(val1 + val2);
+                        break;
+                    case "-":
+                        result = arabicToRoman(val1 - val2);
+                        break;
+                    case "*":
+                        result = arabicToRoman(val1 * val2);
+                        break;
+                    case "/":
+                        try 
+                        {
+                            return arabicToRoman(val1 / val2);    
+                        } catch (Exception e)
+                        {
+                            throw new Exception("Can't divide by 0");
+                        }
+                }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 e.printStackTrace();
             }
         }
-        return result;
+        else
+        {
+            throw new Exception("Both values must be of same type");
+        }
+        if (result != null)
+        {
+            return result;
+        }
+        else
+        {
+            throw new Exception("Null reference exception");
+        }
     }
 }
