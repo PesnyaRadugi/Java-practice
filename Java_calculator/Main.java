@@ -61,9 +61,10 @@ public class Main {
         return romans[numberArabic];
     }
 
-    private static int romansToArabic(String roman)
+    private static int romansToArabic(String roman) throws Exception
     {
-        try {
+        try
+        {
             if (roman.equals("I")) {
                 return 1;
             } else if (roman.equals("II")) {
@@ -85,8 +86,15 @@ public class Main {
             } else if (roman.equals("X")) {
                 return 10;
             }
-        } catch (InputMismatchException e) {
-            throw new InputMismatchException("Неверный формат данных");
+            else
+            {
+                throw new Exception("Incorrect data format");
+                break;
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
         return -1;
     }
