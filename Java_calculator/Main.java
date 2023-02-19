@@ -2,6 +2,7 @@ package Java_calculator;
 
 import java.util.Scanner;
 
+
 public class Main {
     static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) 
@@ -91,84 +92,75 @@ public class Main {
 
     public static String calc(String input) throws Exception
     {
-        String result = null;
         String[] expression = input.split(" ");
-        
+        int val1, val2;
+        String operator = expression[1];
+
         if (expression.length != 3)
         {
             throw new Exception("Invalid number of elements in equasion, make sure all elements are separated by whitespace");
         }
-        int val1, val2;
-        String operator = expression[1];
         
         if (isNumeric(expression[0]) && isNumeric(expression[2]))
         {
             val1 = Integer.parseInt(expression[0]);
             val2 = Integer.parseInt(expression[2]);
+            
+            if (Math.abs(val1) > 10 || Math.abs(val2) > 10)
+            {
+                throw new Exception("Equasion element is beyond 10");
+            }
+
             switch(operator)
             {
                 case "+":
-                    result = Integer.toString(val1 + val2);
-                    break;
+                    return Integer.toString(val1 + val2);
                 case "-":
-                    result = Integer.toString(val1 - val2);
-                    break;
+                    return Integer.toString(val1 - val2);
                 case "*":
-                    result = Integer.toString(val1 * val2);
-                    break;
+                    return Integer.toString(val1 * val2);
                 case "/":
                     try 
                     {
-                        result = Integer.toBinaryString(val1 / val2);   
-                    } catch (Exception e)
+                        return Integer.toBinaryString(val1 / val2);   
+                    } 
+                    catch (Exception e)
                     {
                         throw new Exception("Can't divide by 0");
                     }
+                default:
+                    throw new Exception("Invalid operation");
             }
         }
         else if (!isNumeric(expression[0]) && !isNumeric(expression[2]))
         {
-            try
+            val1 = romansToArabic(expression[0]);
+            val2 = romansToArabic(expression[2]);
+            switch(operator)
             {
-                val1 = romansToArabic(expression[0]);
-                val2 = romansToArabic(expression[2]);
-                switch(operator)
-                {
-                    case "+":
-                        result = arabicToRoman(val1 + val2);
-                        break;
-                    case "-":
-                        result = arabicToRoman(val1 - val2);
-                        break;
-                    case "*":
-                        result = arabicToRoman(val1 * val2);
-                        break;
-                    case "/":
-                        try 
-                        {
-                            return arabicToRoman(val1 / val2);    
-                        } catch (Exception e)
-                        {
-                            throw new Exception("Can't divide by 0");
-                        }
+                case "+":
+                    return arabicToRoman(val1 + val2);
+                case "-":
+                    return arabicToRoman(val1 - val2);
+                case "*":
+                    return arabicToRoman(val1 * val2);
+
+                case "/":
+                    try 
+                    {
+                        return arabicToRoman(val1 / val2);    
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception("Can't divide by 0");
+                    }
+                default:
+                    throw new Exception("Invalid operation");
                 }
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
         }
         else
         {
-            throw new Exception("Both values must be of same type");
-        }
-        if (result != null)
-        {
-            return result;
-        }
-        else
-        {
-            throw new Exception("Null reference exception");
+            throw new Exception("Aboba");
         }
     }
 }
