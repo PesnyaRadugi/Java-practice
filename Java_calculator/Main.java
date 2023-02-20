@@ -47,6 +47,8 @@ public class Main {
                 e.printStackTrace();
             }
         }
+
+        
         String[] romans = 
         {
             "O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX",
@@ -63,31 +65,33 @@ public class Main {
 
     private static int romansToArabic(String roman) throws Exception
     {
-        if (roman.equals("I")) {
-            return 1;
-        } else if (roman.equals("II")) {
-            return 2;
-        } else if (roman.equals("III")) {
-            return 3;
-        } else if (roman.equals("IV")) {
-            return 4;
-        } else if (roman.equals("V")) {
-            return 5;
-        } else if (roman.equals("VI")) {
-            return 6;
-        } else if (roman.equals("VII")) {
-            return 7;
-        } else if (roman.equals("VIII")) {
-            return 8;
-        } else if (roman.equals("IX")) {
-            return 9;
-        } else if (roman.equals("X")) {
-            return 10;
+
+        int result = 0;
+        int currentNumber = 0;
+        int previousNumber = 0;
+
+        for (int i = roman.length() - 1; i >= 0; i--)
+        {
+            switch(roman.charAt(i))
+            {
+                case 'I' -> currentNumber = 1;
+                case 'V' -> currentNumber = 5;
+                case 'X' -> currentNumber = 10;
+                default -> throw new Exception("Incorrect data format");
+            }
+        }
+
+        if (currentNumber < previousNumber)
+        {
+            result -= currentNumber;
         }
         else
         {
-            throw new Exception("Incorrect data format");
+            result += currentNumber;
         }
+        
+        return result;
+
     }
 
     public static String calc(String input) throws Exception
