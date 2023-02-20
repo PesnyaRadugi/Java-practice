@@ -3,7 +3,7 @@ package Java_calculator;
 import java.util.Scanner;
 
 
-public class Main {
+public class Calculator {
     static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) 
     {
@@ -20,7 +20,7 @@ public class Main {
 
         // System.out.println(isNumeric(""));
     }
-
+    
     private static boolean isNumeric(String string)
     {
         char[] characters = string.toCharArray();
@@ -74,30 +74,37 @@ public class Main {
         {
             switch(roman.charAt(i))
             {
+                case 'O' -> currentNumber = 0;
                 case 'I' -> currentNumber = 1;
                 case 'V' -> currentNumber = 5;
                 case 'X' -> currentNumber = 10;
                 default -> throw new Exception("Incorrect data format");
             }
+            if (currentNumber < previousNumber)
+            {
+                result -= currentNumber;
+            }
+            else
+            {
+                result += currentNumber;
+            }
+            previousNumber = currentNumber;
         }
 
-        if (currentNumber < previousNumber)
+        if (result > 10)
         {
-            result -= currentNumber;
+            throw new Exception("Element of equasion is beyond 10");
         }
         else
         {
-            result += currentNumber;
+            return result;
         }
-        
-        return result;
-
     }
 
     public static String calc(String input) throws Exception
     {
-        String[] expression = input.split(" ");
-        int val1, val2;
+        String[] expression = input.split(" "); // Я не знаю, можно ли так делать по условию, в нём не уточняется, но я просто попросил вводить всё через пробел и 
+        int val1, val2; // разбил строку на массив из подстрок, с которыми уже работаю.
         String operator = expression[1];
 
         if (expression.length != 3)
@@ -112,7 +119,7 @@ public class Main {
             
             if (Math.abs(val1) > 10 || Math.abs(val2) > 10)
             {
-                throw new Exception("Equasion element is beyond 10");
+                throw new Exception("Equasion element is beyond 10"); // В этом месте, если ввод был в арабской системе - исключение отрабатывает
             }
 
             switch(operator)
@@ -140,6 +147,7 @@ public class Main {
         {
             val1 = romansToArabic(expression[0]);
             val2 = romansToArabic(expression[2]);
+
             switch(operator)
             {
                 case "+":
